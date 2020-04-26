@@ -3,7 +3,7 @@ FROM ubuntu:18.04
 MAINTAINER Alberto Romeu "alrocar@carto.com"
 
 RUN apt-get update -y
-RUN apt-get install -y python3-pip python-dev build-essential curl libspatialindex-dev
+RUN apt-get install -y python3-pip python-dev build-essential curl libspatialindex-dev cython
 
 COPY . /app
 WORKDIR /app

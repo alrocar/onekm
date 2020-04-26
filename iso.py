@@ -20,6 +20,7 @@ ox.__version__
 CARTO_BASE_URL = os.environ['CARTO_API_URL']
 CARTO_API_KEY = os.environ['CARTO_API_KEY']
 CARTO_USER_NAME = os.environ['CARTO_USER_NAME']
+DPI = 72
 
 
 def make_iso_polys(G, center_node, radius, distance, edge_buff=25, node_buff=50, infill=False):
@@ -60,7 +61,7 @@ def get_iso_distance(lat, lon, distance=1000, network_type='walk'):
     gdf = gdf.to_crs("EPSG:4326")
     bounds = gdf.bounds
 
-    return iso, bounds
+    return gdf, bounds
 
 
 def create_named_map(auth_client, username, dataset_name, map_name, factor, lon, lat):
@@ -127,13 +128,13 @@ def create_named_map(auth_client, username, dataset_name, map_name, factor, lon,
     named_map_manager = NamedMapManager(auth_client)
 
     try:
-      named_map = named_map_manager.get(map_name)
-      if named_map is not None:
-          named_map.client = auth_client
-          named_map.delete()
+        named_map = named_map_manager.get(map_name)
+        if named_map is not None:
+            named_map.client = auth_client
+            named_map.delete()
     except Exception as e:
-      #ignore
-      print(e)
+        #ignore
+        print(e)
 
     return named_map_manager.create(template=template)
 
@@ -147,7 +148,6 @@ def create_map(iso, lon, lat):
     to_carto(iso, dataset_name, if_exists='replace', log_enabled=True)
 
     auth_client = APIKeyAuthClient(CARTO_BASE_URL, CARTO_API_KEY)
-    DPI = 72
     FACTOR = DPI / 72.0
     map_name = 'tpl_' + dataset_name
     create_named_map(auth_client, CARTO_USER_NAME, dataset_name, map_name, FACTOR, lon, lat)

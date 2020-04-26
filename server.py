@@ -3,7 +3,7 @@ from flask import Flask
 from flask import request
 from flask import send_from_directory
 
-from carto.iso import get_iso_distance, create_map, export_map, delete_map
+from iso import get_iso_distance, create_map, export_map, delete_map
 
 
 app = Flask(__name__)

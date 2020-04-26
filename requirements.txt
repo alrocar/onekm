@@ -1,4 +1,6 @@
-cartoframes
-carto-print
-pyrosm
-osmnx
+cartoframes==1.0.2
+carto-print==0.0.8
+osmnx==0.12
+Flask==1.0.2
+honcho==0.7.1
+gunicorn==19.6.0
